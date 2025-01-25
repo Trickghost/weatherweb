@@ -1,13 +1,13 @@
 const container = document.querySelector('.container');
 const search = document.querySelector('.search-box button');
+const input = document.querySelector('.search-box input'); // Thêm dòng này
 const weatherBox = document.querySelector('.weather-box');
 const weatherDetails = document.querySelector('.weather-details');
 const error404 = document.querySelector('.not-found');
 
-search.addEventListener('click', () => {
-
+function fetchWeather() {
     const APIKey = 'fb791c8c27eb0637cbe3f6c9ebe03198';
-    const city = document.querySelector('.search-box input').value;
+    const city = input.value;
 
     if (city === '')
         return;
@@ -69,9 +69,15 @@ search.addEventListener('click', () => {
             weatherBox.classList.add('fadeIn');
             weatherDetails.classList.add('fadeIn');
             container.style.height = '590px';
-
-
         });
+}
 
+// Sự kiện click nút tìm kiếm
+search.addEventListener('click', fetchWeather);
 
+// Sự kiện nhấn Enter trong ô input
+input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        fetchWeather();
+    }
 });
