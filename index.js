@@ -21,7 +21,11 @@ function fetchWeatherByCity(city) {
 function fetchWeatherByCoords(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${APIKey}`)
         .then(response => response.json())
-        .then(displayWeather)
+        .then((json) => {
+            displayWeather(json);
+
+            input.value = json.name || 'Unknown location';
+        })
         .catch(() => {
             showError();
         });
@@ -100,8 +104,8 @@ input.addEventListener('keydown', (event) => {
 });
 
 const locationButton = document.createElement('button');
-locationButton.textContent = 'Use My Location';
-locationButton.style.marginTop = '10px';
+locationButton.textContent = 'GPS';
+locationButton.style.marginTop = '5px';
 document.querySelector('.search-box').appendChild(locationButton);
 
 locationButton.addEventListener('click', () => {
